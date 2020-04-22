@@ -5,11 +5,16 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
     "server": "nodemon app.js"
   },
   "author": "Travis Laudahl",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^2.0.3"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1"
   }
 }
