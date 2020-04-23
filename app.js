@@ -5,18 +5,23 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-const adminRoutes = require('./routes/admin');
+app.set('view engine', 'pug');
+app.set('views', 'views');
+
+const adminData = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
-app.use('/admin', adminRoutes);
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'public')))
+
+app.use('/admin', adminData.routes);
 app.use(shopRoutes);
 
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.static(path.join(__dirname, 'public')))
 
 
 app.use((req, res) => {
-    res.status(404).sendFile(path.join(__dirname, 'views', '404.html'))
+    res.status(404).render('404', {pageTitle: '404 Page Not Found'});
 })
 
 app.listen(3000);
