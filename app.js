@@ -1,5 +1,7 @@
 const path = require('path');
 
+const pageNotFound = require('./controllers/404');
+
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -20,8 +22,6 @@ app.use(shopRoutes);
 
 
 
-app.use((req, res) => {
-    res.status(404).render('404', {pageTitle: '404 Page Not Found'});
-})
+app.use(pageNotFound.pageNotFound)
 
 app.listen(3000);
