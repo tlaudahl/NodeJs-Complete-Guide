@@ -107,4 +107,4 @@ dist/
 # Temporary folders
 tmp/
 temp/
-data/products.json
+data/
