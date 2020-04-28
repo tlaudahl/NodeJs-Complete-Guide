@@ -28,8 +28,7 @@ exports.getCart = (req, res, next) => {
                 const cartProductData = cart.products.find(prod => prod.id === product.id);
             if (cartProductData) {
                 cartProducts.push({ productData: product, qty: cartProductData.qty });
-            }
-            }
+            }}
             res.render('shop/cart', {
                 path: '/cart',
                 pageTitle: 'Your Cart',
@@ -40,9 +39,9 @@ exports.getCart = (req, res, next) => {
 };
 
 exports.postCartDeleteProduct = (req, res, next) => {
-    const prodId = req.body.productId;
-    Product.findById(prodId, product => {
-        Cart.deleteProduct(prodId, product.price);
+    const { productId } = req.body;
+    Product.findById(productId, product => {
+        Cart.deleteProduct(productId, product.price);
         res.redirect('/cart');
     });
 };
