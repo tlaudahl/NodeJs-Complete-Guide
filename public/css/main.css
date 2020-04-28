@@ -90,6 +90,16 @@ main {
 .card__actions button,
 .card__actions a {
     margin: 0 0.25rem;
+    text-decoration: none;
+    color: #00695c;
+}
+
+.card__actions a:hover {
+  color: white;
+}
+
+.card__actions__form {
+  display: inline-block;
 }
 
 .btn {
