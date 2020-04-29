@@ -11,7 +11,10 @@
   "author": "Travis Laudahl",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.3"
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.11.0",
+    "nodemon": "^2.0.3",
+    "prettier": "2.0.5"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -20,6 +23,7 @@
     "express": "^4.17.1",
     "express-handlebars": "^3.0.2",
     "mysql2": "^2.1.0",
-    "pug": "^2.0.4"
+    "pug": "^2.0.4",
+    "sequelize": "^5.21.7"
   }
 }
