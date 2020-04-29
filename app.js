@@ -1,9 +1,11 @@
 const path = require('path');
 
-const pageNotFound = require('./controllers/404');
 
 const express = require('express');
 const bodyParser = require('body-parser');
+
+const pageNotFound = require('./controllers/404');
+const db = require('./util/database');
 
 const app = express();
 
