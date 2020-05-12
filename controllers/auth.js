@@ -1,9 +1,10 @@
+const User = require("../models/user");
+
 exports.getLogin = (req, res, next) => {
-  const isLoggedIn = req.get("Cookie").split("=")[1].trim() === "true";
   res.render("auth/login", {
     path: "/login",
     pageTitle: "Login",
-    isAuthenticated: isLoggedIn,
+    isAuthenticated: req.session.isLoggedIn,
   });
 };
 
@@ -12,6 +13,12 @@ exports.postLogin = (req, res, next) => {
   // res.setHeader("Set-Cookie", "loggedIn=true; Max-Age=10;") Cookie will expire in 10 seconds. Takes precedence over Expires
   // res.setHeader("Set-Cookie", "loggedIn=true; Secure") Only sends the cookie when a request is made with https
   // res.setHeader("Set-Cookie", "loggedIn=true; HttpOnly") Forbids client side JavaScript from accessing the cookie
-  res.setHeader("Set-Cookie", "loggedIn=true;");
-  res.redirect("/");
+  // res.setHeader("Set-Cookie", "loggedIn=true;"); Sets a loggedIn cookie to true
+  User.findById("5eac90be5d4d2996f0aea4df")
+    .then((user) => {
+      req.session.user = user;
+      req.session.isLoggedIn = true;
+      res.redirect("/");
+    })
+    .catch((err) => console.log(err));
 };
