@@ -23,13 +23,29 @@ exports.postLogin = (req, res, next) => {
   // res.setHeader("Set-Cookie", "loggedIn=true; Secure") Only sends the cookie when a request is made with https
   // res.setHeader("Set-Cookie", "loggedIn=true; HttpOnly") Forbids client side JavaScript from accessing the cookie
   // res.setHeader("Set-Cookie", "loggedIn=true;"); Sets a loggedIn cookie to true
-  User.findById("5eac90be5d4d2996f0aea4df")
+  const { password, email } = req.body;
+  User.findOne({ email: email })
     .then(user => {
-      req.session.isLoggedIn = true;
-      req.session.user = user;
-      req.session.save(err => {
-        res.redirect("/");
-      });
+      if (!user) {
+        return res.redirect("/login");
+      }
+      bcrypt
+        .compare(password, user.password)
+        .then(matched => {
+          if (matched) {
+            req.session.isLoggedIn = true;
+            req.session.user = user;
+            return req.session.save(err => {
+              console.log(err);
+              res.redirect("/");
+            });
+          }
+          res.redirect("/login");
+        })
+        .catch(err => {
+          console.log(err);
+          res.redirect("/login");
+        });
     })
     .catch(err => console.log(err));
 };
