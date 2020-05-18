@@ -40,11 +40,11 @@ app.use(
 app.use((req, res, next) => {
   if (req.session.user) {
     User.findById(req.session.user._id)
-      .then((user) => {
+      .then(user => {
         req.user = user;
         return next();
       })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   } else {
     return next();
   }
@@ -58,19 +58,7 @@ app.use(pageNotFound.pageNotFound);
 
 mongoose
   .connect(MONGODB_URI)
-  .then((result) => {
-    User.findOne().then((user) => {
-      if (!user) {
-        const user = new User({
-          name: "Travis",
-          email: "travis@test.com",
-          cart: {
-            items: [],
-          },
-        });
-        user.save();
-      }
-    });
+  .then(result => {
     app.listen(3000);
   })
-  .catch((err) => console.log(err));
+  .catch(err => console.log(err));
