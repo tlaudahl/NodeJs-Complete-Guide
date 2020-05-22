@@ -4,11 +4,11 @@ const Product = require("./product");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  name: {
+  email: {
     type: String,
     required: true,
   },
-  email: {
+  password: {
     type: String,
     required: true,
   },
@@ -27,7 +27,7 @@ const userSchema = new Schema({
 });
 
 userSchema.methods.deleteFromCart = function (productId) {
-  const updatedCartItems = this.cart.items.filter((item) => {
+  const updatedCartItems = this.cart.items.filter(item => {
     return item.productId.toString() !== productId.toString();
   });
   this.cart.items = updatedCartItems;
@@ -35,14 +35,14 @@ userSchema.methods.deleteFromCart = function (productId) {
 };
 
 userSchema.methods.getCart = function () {
-  const productIds = this.cart.items.map((i) => {
+  const productIds = this.cart.items.map(i => {
     return i.productId;
   });
-  Product.find({ _id: { $in: productIds } }).then((products) => {
-    return products.map((p) => {
+  Product.find({ _id: { $in: productIds } }).then(products => {
+    return products.map(p => {
       return {
         ...p,
-        quantity: this.cart.items.find((i) => {
+        quantity: this.cart.items.find(i => {
           return i.productId.toString() === p._id.toString();
         }).quantity,
       };
@@ -52,7 +52,7 @@ userSchema.methods.getCart = function () {
 
 userSchema.methods.addToCart = function (product) {
   // If item is already in the cart, just increase the quantity of that product
-  const cartProductIndex = this.cart.items.findIndex((cp) => {
+  const cartProductIndex = this.cart.items.findIndex(cp => {
     return cp.productId.toString() === product._id.toString();
   });
   let newQuantity = 1;
